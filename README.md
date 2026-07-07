@@ -117,21 +117,28 @@ Batches are distributed round-robin: batch 1 → Gemini, batch 2 → Mistral, et
 
 ## Deployment
 
-### Backend → Render
+### Option A — Both on Vercel (recommended, one domain)
 
-1. New **Web Service**, root directory: `backend`
-2. Build: `npm install && npm run build`
-3. Start: `npm start`
-4. Health check path: `/health`
-5. Set env vars: `GEMINI_API_KEY`, `MISTRAL_API_KEY`, `CORS_ORIGIN=https://your-app.vercel.app`
+Uses [Vercel Services](https://vercel.com/docs/services) — frontend + backend from one repo.
 
-Or use `backend/render.yaml` as a Blueprint.
+1. Import repo at [vercel.com](https://vercel.com)
+2. Set **Framework Preset** to **Services** (Vercel auto-detects `frontend` + `backend`)
+3. Root `vercel.json` routes:
+   - `/` → Next.js frontend
+   - `/api/*` → Express backend
+   - `/health` → backend health check
+4. Add env vars in Vercel project settings:
+   - `GEMINI_API_KEY`, `MISTRAL_API_KEY` (and other backend vars)
+   - Leave `NEXT_PUBLIC_API_URL` **empty** (same-origin API calls)
+5. Deploy
 
-### Frontend → Vercel
+Ping health: `https://your-app.vercel.app/health`
 
-1. New project, root directory: `frontend`
-2. Set `NEXT_PUBLIC_API_URL` to your Render backend URL
-3. Deploy
+### Option B — Split (Render + Vercel)
+
+**Backend → Render:** root `backend`, health path `/health`, see `backend/render.yaml`
+
+**Frontend → Vercel:** root `frontend`, set `NEXT_PUBLIC_API_URL=https://your-api.onrender.com`
 
 CORS auto-allows `*.vercel.app` domains.
 

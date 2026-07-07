@@ -1,6 +1,7 @@
 import type { ImportResult, ProgressState } from "@/types/crm";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+// Empty = same-origin (Vercel Services). Local dev uses http://localhost:4000
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 
 interface StreamHandlers {
   onProgress: (progress: ProgressState) => void;
