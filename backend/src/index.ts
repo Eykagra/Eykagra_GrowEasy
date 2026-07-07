@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { app } from "./app.js";
+import app from "./app.js";
 
 // Vercel Express Services: export the app (no manual listen on Vercel)
 export default app;

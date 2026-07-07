@@ -19,7 +19,7 @@ function isAllowedOrigin(origin: string | undefined): boolean {
   return false;
 }
 
-export const app = express();
+const app = express();
 
 app.use(
   cors({
@@ -45,3 +45,5 @@ app.use("/api/health", healthRouter);
 app.use("/api/import", importRouter);
 
 app.use(errorHandler);
+
+export default app;
