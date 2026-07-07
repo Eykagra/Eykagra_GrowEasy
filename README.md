@@ -2,7 +2,7 @@
 
 AI-powered CSV importer that maps arbitrary lead exports (Facebook, Google Ads, Excel, CRM dumps) into standardized **GrowEasy CRM** records.
 
-**Live repo:** [github.com/FlameXWolf/Eykagra_GrowEasy](https://github.com/FlameXWolf/Eykagra_GrowEasy)
+**Live repo:** [github.com/Eykagra/Eykagra_GrowEasy](https://github.com/Eykagra/Eykagra_GrowEasy)
 
 ## Architecture
 
