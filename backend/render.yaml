@@ -1,0 +1,32 @@
+# Render Blueprint — deploy backend from the backend/ directory
+# Dashboard: New > Blueprint > connect repo, or set Root Directory to "backend"
+services:
+  - type: web
+    name: groweasy-csv-api
+    runtime: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: MISTRAL_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
+      - key: AI_PRIMARY
+        value: gemini
+      - key: BATCH_SIZE
+        value: "25"
+      - key: MAX_BATCHES
+        value: "4"
+      - key: PARALLEL_BATCHES
+        value: "3"
+      - key: MAX_RETRIES
+        value: "3"
+      - key: CORS_ORIGIN
+        sync: false

@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-page: #f3f4f6;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --bg-muted: #e5e7eb;
+    --text-primary: #111827;
+    --text-secondary: #4b5563;
+    --text-muted: #9ca3af;
+    --border: #e5e7eb;
+    --accent: #22a55b;
+    --accent-hover: #1d934f;
+    --accent-soft: #e8f7ee;
+  }
+
+  .dark {
+    --bg-page: #0f1419;
+    --bg-primary: #1a2332;
+    --bg-secondary: #243044;
+    --bg-muted: #2a3544;
+    --text-primary: #f3f4f6;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --border: #2a3544;
+    --accent: #2db86a;
+    --accent-hover: #22a55b;
+    --accent-soft: #1a3d2a;
+  }
+
+  body {
+    @apply bg-[var(--bg-page)] text-[var(--text-primary)] antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+@layer components {
+  .table-container {
+    @apply relative overflow-auto rounded-lg border border-[var(--border)];
+    background-color: color-mix(in srgb, var(--bg-secondary) 50%, transparent);
+    max-height: min(60vh, 520px);
+  }
+
+  .data-table {
+    @apply w-full text-sm;
+  }
+
+  .data-table thead {
+    @apply sticky top-0 z-10 bg-[var(--bg-secondary)] shadow-sm;
+  }
+
+  .data-table th {
+    @apply whitespace-nowrap px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-[var(--text-muted)];
+  }
+
+  .data-table td {
+    @apply whitespace-nowrap border-t border-[var(--border)] px-4 py-2.5 text-[var(--text-secondary)];
+  }
+
+  .data-table tbody tr:hover {
+    background-color: color-mix(in srgb, var(--accent) 5%, transparent);
+  }
+
+  .leads-card {
+    @apply overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] shadow-sm;
+  }
+
+  .leads-card-header {
+    @apply flex items-center justify-between border-b border-[var(--border)] px-5 py-4;
+  }
+
+  .leads-table-container {
+    @apply border-0;
+    background: transparent;
+    max-height: min(65vh, 560px);
+  }
+
+  .leads-table {
+    @apply w-full text-sm;
+  }
+
+  .leads-table thead {
+    @apply sticky top-0 z-10 bg-[var(--bg-secondary)];
+  }
+
+  .leads-table th {
+    @apply whitespace-nowrap border-b border-[var(--border)] px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-[var(--text-muted)];
+  }
+
+  .leads-table td {
+    @apply border-b border-[var(--border)] px-5 py-3.5 text-[var(--text-secondary)];
+  }
+
+  .leads-table tbody tr:hover {
+    background-color: color-mix(in srgb, var(--accent) 5%, transparent);
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+    background-color: var(--accent);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--accent-hover);
+  }
+
+  .btn-primary:focus {
+    --tw-ring-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-5 py-2.5 text-sm font-semibold text-[var(--text-primary)] transition-all hover:bg-[var(--bg-secondary)] focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-secondary:focus {
+    --tw-ring-color: color-mix(in srgb, var(--accent) 20%, transparent);
+  }
+
+  .content-card {
+    @apply rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-5 shadow-sm;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
