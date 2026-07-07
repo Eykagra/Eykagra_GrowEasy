@@ -2,6 +2,7 @@
   "name": "csv-importer-backend",
   "version": "1.0.0",
   "description": "AI-powered CSV to CRM importer API",
+  "author": "Eykagra <eykagragangwar2004@gmail.com>",
   "type": "module",
   "main": "dist/index.js",
   "engines": {

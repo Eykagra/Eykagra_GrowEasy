@@ -2,6 +2,7 @@
   "name": "csv-importer-frontend",
   "version": "1.0.0",
   "private": true,
+  "author": "Eykagra <eykagragangwar2004@gmail.com>",
   "engines": {
     "node": ">=20"
   },
