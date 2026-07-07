@@ -17,7 +17,7 @@ const upload = multer({
     ) {
       cb(null, true);
     } else {
-      cb(new AppError("Only CSV files are allowed"));
+      cb(new Error("Only CSV files are allowed"));
     }
   },
 });
@@ -25,7 +25,13 @@ const upload = multer({
 const router = Router();
 
 function getProcessor(): BatchProcessor {
-  return new BatchProcessor(new AiService());
+  try {
+    return new BatchProcessor(new AiService());
+  } catch (err) {
+    const message =
+      err instanceof Error ? err.message : "AI provider not configured";
+    throw new AppError(message, 503);
+  }
 }
 
 router.post(
@@ -63,6 +69,7 @@ router.post(
       res.setHeader("Content-Type", "application/x-ndjson");
       res.setHeader("Cache-Control", "no-cache");
       res.setHeader("Connection", "keep-alive");
+      res.flushHeaders?.();
 
       const writeEvent = (event: StreamEvent) => {
         res.write(JSON.stringify(event) + "\n");

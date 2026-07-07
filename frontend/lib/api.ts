@@ -14,6 +14,22 @@ export async function importCsvWithProgress(
   handlers: StreamHandlers,
   signal?: AbortSignal
 ): Promise<void> {
+  try {
+    await importCsvStream(file, handlers, signal);
+  } catch (err) {
+    if (signal?.aborted) throw err;
+
+    // Vercel serverless may not support NDJSON streaming — fall back to JSON API
+    console.warn("Stream import failed, falling back to standard import:", err);
+    await importCsvJson(file, handlers, signal);
+  }
+}
+
+async function importCsvStream(
+  file: File,
+  handlers: StreamHandlers,
+  signal?: AbortSignal
+): Promise<void> {
   const formData = new FormData();
   formData.append("file", file);
 
@@ -66,4 +82,42 @@ export async function importCsvWithProgress(
       }
     }
   }
+}
+
+async function importCsvJson(
+  file: File,
+  handlers: StreamHandlers,
+  signal?: AbortSignal
+): Promise<void> {
+  handlers.onProgress({
+    batch: 0,
+    totalBatches: 1,
+    message: "Processing import (this may take a minute on serverless)...",
+  });
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await fetch(`${API_URL}/api/import`, {
+    method: "POST",
+    body: formData,
+    signal,
+  });
+
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ error: "Import failed" }));
+    throw new Error(err.error ?? `Server error: ${response.status}`);
+  }
+
+  const body = await response.json();
+  if (!body.success || !body.data) {
+    throw new Error(body.error ?? "Import failed");
+  }
+
+  handlers.onProgress({
+    batch: 1,
+    totalBatches: 1,
+    message: "Import complete",
+  });
+  handlers.onComplete(body.data);
 }
